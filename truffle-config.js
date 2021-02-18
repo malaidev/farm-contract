@@ -38,8 +38,14 @@ module.exports = {
       },
       network_id: 4,
       gas: 6000000,
-      
-  },
+    },
+    kovan: {
+      provider: function() { 
+       return new HDWalletProvider(MNEMONIC, "https://kovan.infura.io/v3/" + token);
+      },
+      network_id: 42,
+      gas: 6000000,
+    },
     mainnet: {
       provider: function() {
         return new HDWalletProvider(MNEMONIC, "https://mainnet.infura.io/v3/" + token)
