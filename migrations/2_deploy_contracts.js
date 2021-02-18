@@ -108,6 +108,50 @@ module.exports = async function(deployer, network, addresses) {
     // token = await MockERC20.deployed();
     // console.log('token address is ' + token.address);
   }
+  else if(network == 'kovan-fork' || network == 'kovan') {
+    console.log('kovan started...')
+
+    weth = await WETH.at('0xd0a1e359811322d97991e03f863a0c30c2cf029c');
+    factory = await Factory.at('0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f');
+    router = await Router.at('0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D');
+   
+    await deployer.deploy(MockERC20,'BIRD', 'BIRD', web3.utils.toWei('1000000'));
+    bird = await MockERC20.deployed();
+    //bird = await MockERC20.at('0x56704aA00Fa292A8DC713aa165306359299c92F8')
+    await factory.createPair(weth.address, bird.address);
+    birdlp = await factory.getPair(weth.address, bird.address);
+    console.log('Bird lp address is ' + birdlp);
+    
+
+    // token = await MockERC20.at('0x348cb44dB721Bf62aF1428CCEe780f2bbC6FEeB8'); //already deployed
+    // await deployer.deploy(MockERC20,'USDT', 'USDT', web3.utils.toWei('1000000'));
+    // usdt = await MockERC20.deployed();
+    // usdt = await MockERC20.at("0x679e58346Cb3F3930692d55CBaf82350C1E57aFB")
+    // console.log('USDT address is ' + usdt.address);
+    // await factory.createPair(weth.address, usdt.address);
+    // usdtlp = await factory.getPair(weth.address, usdt.address);
+    // console.log('USDT lp address is ' + usdtlp);
+    
+    // await deployer.deploy(MockERC20,'DAI', 'DAI', web3.utils.toWei('1000000'));
+    // dai = await MockERC20.deployed();
+    // dai = await MockERC20.at("0x67f43A60ebD2EA1A7a64Db8729DbB3f85F20315D")
+
+    // console.log('DAI address is ' + dai.address);
+
+    // await factory.createPair(weth.address, dai.address);
+    // dailp = await factory.getPair(weth.address, dai.address);
+    // console.log('DAI lp address is ' + dailp);
+    
+    // await deployer.deploy(MockERC20,'USDC', 'USDC', web3.utils.toWei('1000000'));
+    // usdc = await MockERC20.deployed();
+    // usdc = await MockERC20.at("0xFa14572Bc0C3343E2bB6251B53DC387E5f353F7c");
+    // console.log('USDC address is ' + usdc.address);
+    // await factory.createPair(weth.address, usdc.address);
+    // usdclp = await factory.getPair(weth.address, usdc.address);
+    // console.log('USDC lp address is ' + usdclp);
+        
+    // console.log('token address is ' + token.address);
+  }
   else{
     await deployer.deploy(WETH);
     weth = await WETH.deployed();
